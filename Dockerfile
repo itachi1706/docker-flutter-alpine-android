@@ -4,4 +4,5 @@ WORKDIR /usr
 
 RUN apk add --no-cache bash curl unzip git tar xz
 
-ENV PATH="/usr/flutter/bin:${PATH}"
+ENV FLUTTER_HOME=/usr/flutter/bin
+ENV PATH=${FLUTTER_HOME}:${PATH}
