@@ -11,5 +11,5 @@ These tags are based on various official channels of Flutter
 * master - channel master
 
 There are also tagged releases of a specific version of Flutter if needed. These versions are split between `legacy` and non-legacy tags. You should always be using the non-legacy tags as the legacy tags are there for compatability reasons and may actually fail to run
-* `legacy-{version}` tags signify legacy builds of Flutter
-* `{version}` tags signify non-legacy builds of Flutter
+* `legacy-{version}` tags signify legacy builds of Flutter (Before 6 May 2020)
+* `{version}` tags signify current, non-legacy builds of Flutter

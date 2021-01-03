@@ -5,28 +5,6 @@ on:
     branches: [ master ]
 
 jobs:
-  flutterv0:
-    runs-on: ubuntu-latest
-    name: Flutter Current (v0)
-    steps:
-    - uses: actions/checkout@v2
-    - name: Dockerhub login
-      env:
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      run: |
-        echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USERNAME} --password-stdin
-    - name: Build Docker images
-      run: |
-        cd tag
-        data=$(git ls-remote --tags https://github.com/flutter/flutter | grep -Po "(?<=refs/tags/)0.*")
-        for f in $data;  
-        do 
-          echo Building and Pushing tagged version $f
-          docker build -f Dockerfile -t itachi1706/flutter-alpine-android:$f --build-arg FLUTTER_VERSION=$f .
-          docker push itachi1706/flutter-alpine-android:$f
-          docker rmi itachi1706/flutter-alpine-android:$f
-        done
   flutterv1:
     runs-on: ubuntu-latest
     name: Flutter Current (v1)
@@ -49,29 +27,7 @@ jobs:
           docker push itachi1706/flutter-alpine-android:$f
           docker rmi itachi1706/flutter-alpine-android:$f
         done
-  flutterlegacyv0:
-    runs-on: ubuntu-latest
-    name: Flutter Legacy (v0)
-    steps:
-    - uses: actions/checkout@v2
-    - name: Dockerhub login
-      env:
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      run: |
-        echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USERNAME} --password-stdin
-    - name: Build Docker images
-      run: |
-        cd tag
-        data=$(git ls-remote --tags https://github.com/flutter/flutter | grep -Po "(?<=refs/tags/)v0.*")
-        for f in $data;  
-        do 
-          echo Building and Pushing tagged version $f
-          docker build -f Dockerfile -t itachi1706/flutter-alpine-android:legacy-$f --build-arg FLUTTER_VERSION=$f .
-          docker push itachi1706/flutter-alpine-android:legacy-$f
-          docker rmi itachi1706/flutter-alpine-android:legacy-$f
-        done
-  flutterlegacyv1:
+  flutterlegacy:
     runs-on: ubuntu-latest
     name: Flutter Legacy (v1)
     steps:
