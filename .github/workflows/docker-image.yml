@@ -1,0 +1,63 @@
+name: Update tagged releases
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  flutterv0:
+    runs-on: ubuntu-latest
+    name: Flutter Current (v0)
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build Docker images
+      run: |
+        cd tag
+        data=$(git ls-remote --tags https://github.com/flutter/flutter | grep -Po "(?<=refs/tags/)0.*")
+        for f in $data;  do 
+          docker build . --file Dockerfile --tag itachi1706/flutter-alpine-android:$f --build-args FLUTTER_VERSION=$f
+          docker push itachi1706/flutter-alpine-android:$f
+          docker rmi itachi1706/flutter-alpine-android:$f
+        done
+  flutterv1:
+    runs-on: ubuntu-latest
+    name: Flutter Current (v1)
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build Docker images
+      run: |
+        cd tag
+        data=$(git ls-remote --tags https://github.com/flutter/flutter | grep -Po "(?<=refs/tags/)1.*")
+        for f in $data;  do 
+          docker build . --file Dockerfile --tag itachi1706/flutter-alpine-android:$f --build-args FLUTTER_VERSION=$f
+          docker push itachi1706/flutter-alpine-android:$f
+          docker rmi itachi1706/flutter-alpine-android:$f
+        done
+  flutterlegacyv0:
+    runs-on: ubuntu-latest
+    name: Flutter Legacy (v0)
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build Docker images
+      run: |
+        cd tag
+        data=$(git ls-remote --tags https://github.com/flutter/flutter | grep -Po "(?<=refs/tags/)v0.*")
+        for f in $data;  do 
+          docker build . --file Dockerfile --tag itachi1706/flutter-alpine-android:legacy-$f --build-args FLUTTER_VERSION=$f
+          docker push itachi1706/flutter-alpine-android:legacy-$f
+          docker rmi itachi1706/flutter-alpine-android:legacy-$f
+        done
+  flutterlegacyv1:
+    runs-on: ubuntu-latest
+    name: Flutter Legacy (v1)
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build Docker images
+      run: |
+        cd tag
+        data=$(git ls-remote --tags https://github.com/flutter/flutter | grep -Po "(?<=refs/tags/)v1.*")
+        for f in $data;  do 
+          docker build . --file Dockerfile --tag itachi1706/flutter-alpine-android:legacy-$f --build-args FLUTTER_VERSION=$f
+          docker push itachi1706/flutter-alpine-android:legacy-$f
+          docker rmi itachi1706/flutter-alpine-android:legacy-$f
+        done
