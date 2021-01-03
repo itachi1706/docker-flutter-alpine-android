@@ -4,7 +4,7 @@ ARG FLUTTER_VERSION
 
 RUN git clone https://github.com/flutter/flutter.git -b ${FLUTTER_VERSION}
 
-RUN flutter upgrade && flutter precache
+RUN flutter precache
 RUN yes | flutter doctor --android-licenses
 
 WORKDIR /opt
