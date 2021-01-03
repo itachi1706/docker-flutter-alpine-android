@@ -5,9 +5,9 @@ on:
     branches: [ master ]
 
 jobs:
-  flutterv1:
+  flutterstable:
     runs-on: ubuntu-latest
-    name: Flutter Current (v1)
+    name: Flutter Stable
     steps:
     - uses: actions/checkout@v2
     - name: Dockerhub login
@@ -19,7 +19,51 @@ jobs:
     - name: Build Docker images
       run: |
         cd tag
-        data=$(git ls-remote --tags https://github.com/flutter/flutter | grep -Po "(?<=refs/tags/)1.*")
+        data=$(git ls-remote --tags https://github.com/flutter/flutter | grep -Po "(?<=refs/tags/)1.*" | grep -v "pre" | grep -v "dev")
+        for f in $data;  
+        do 
+          echo Building and Pushing tagged version $f
+          docker build -f Dockerfile -t itachi1706/flutter-alpine-android:$f --build-arg FLUTTER_VERSION=$f .
+          docker push itachi1706/flutter-alpine-android:$f
+          docker rmi itachi1706/flutter-alpine-android:$f
+        done
+  flutterbeta:
+    runs-on: ubuntu-latest
+    name: Flutter Beta
+    steps:
+    - uses: actions/checkout@v2
+    - name: Dockerhub login
+      env:
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      run: |
+        echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USERNAME} --password-stdin
+    - name: Build Docker images
+      run: |
+        cd tag
+        data=$(git ls-remote --tags https://github.com/flutter/flutter | grep -Po "(?<=refs/tags/)1.*(?<=pre)")
+        for f in $data;  
+        do 
+          echo Building and Pushing tagged version $f
+          docker build -f Dockerfile -t itachi1706/flutter-alpine-android:$f --build-arg FLUTTER_VERSION=$f .
+          docker push itachi1706/flutter-alpine-android:$f
+          docker rmi itachi1706/flutter-alpine-android:$f
+        done
+  flutterdev:
+    runs-on: ubuntu-latest
+    name: Flutter Dev
+    steps:
+    - uses: actions/checkout@v2
+    - name: Dockerhub login
+      env:
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      run: |
+        echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USERNAME} --password-stdin
+    - name: Build Docker images
+      run: |
+        cd tag
+        data=$(git ls-remote --tags https://github.com/flutter/flutter | grep -Po "(?<=refs/tags/)1.*(?<=dev)")
         for f in $data;  
         do 
           echo Building and Pushing tagged version $f
@@ -29,7 +73,7 @@ jobs:
         done
   flutterlegacy:
     runs-on: ubuntu-latest
-    name: Flutter Legacy (v1)
+    name: Flutter Legacy
     steps:
     - uses: actions/checkout@v2
     - name: Dockerhub login
