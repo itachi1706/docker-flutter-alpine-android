@@ -63,7 +63,7 @@ jobs:
     - name: Build Docker images
       run: |
         cd tag
-        data=$(git ls-remote --tags https://github.com/flutter/flutter | grep -Po "(?<=refs/tags/)1.*(?<=dev)")
+        data=$(git ls-remote --tags https://github.com/flutter/flutter | grep -Po "(?<=refs/tags/)1.*(?<=dev).*")
         for f in $data;  
         do 
           echo Building and Pushing tagged version $f
