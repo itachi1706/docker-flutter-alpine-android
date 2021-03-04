@@ -16,7 +16,7 @@ RUN apk add --no-cache bash curl unzip git gzip tar xz
 ENV FLUTTER_HOME=/usr/flutter/bin
 ENV PATH=${FLUTTER_HOME}:${PATH}
 
-RUN git clone https://github.com/flutter/flutter.git -b beta
+RUN git clone https://github.com/flutter/flutter.git -b stable
 
 RUN flutter upgrade && flutter precache
 RUN flutter config --enable-web
