@@ -10,12 +10,11 @@ jobs:
     name: Flutter Stable
     steps:
     - uses: actions/checkout@v2
-    - name: Dockerhub login
-      env:
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      run: |
-        echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USERNAME} --password-stdin
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build Docker images
       run: |
         cd tag
@@ -32,12 +31,11 @@ jobs:
     name: Flutter Beta
     steps:
     - uses: actions/checkout@v2
-    - name: Dockerhub login
-      env:
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      run: |
-        echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USERNAME} --password-stdin
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build Docker images
       run: |
         cd tag
@@ -54,12 +52,11 @@ jobs:
     name: Flutter Dev
     steps:
     - uses: actions/checkout@v2
-    - name: Dockerhub login
-      env:
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      run: |
-        echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USERNAME} --password-stdin
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build Docker images
       run: |
         cd tag
@@ -76,12 +73,11 @@ jobs:
   #   name: Flutter Legacy
   #   steps:
   #   - uses: actions/checkout@v2
-  #   - name: Dockerhub login
-  #     env:
-  #       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  #       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-  #     run: |
-  #       echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USERNAME} --password-stdin
+  #   - name: Login to DockerHub
+  #    uses: docker/login-action@v1
+  #    with:
+  #      username: ${{ secrets.DOCKERHUB_USERNAME }}
+  #      password: ${{ secrets.DOCKERHUB_TOKEN }}
   #   - name: Build Docker images
   #     run: |
   #       cd tag
