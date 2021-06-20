@@ -39,8 +39,8 @@ jobs:
     - name: Build and push Docker images
       uses: docker/build-push-action@v2.5.0
       with:
-        context: fastlane
-        file: Dockerfile.cli
+        context: ./fastlane
+        file: ./fastlane/Dockerfile.cli
         pull: true
         push: true
         tags: itachi1706/flutter-alpine-android:fastlane-cli
@@ -57,8 +57,8 @@ jobs:
     - name: Build and push Docker images
       uses: docker/build-push-action@v2.5.0
       with:
-        context: web
-        file: Dockerfile
+        context: ./web
+        file: ./web/Dockerfile
         pull: true
         push: true
         tags: itachi1706/flutter-alpine-android:web
@@ -77,8 +77,8 @@ jobs:
     - name: Build and push Docker images
       uses: docker/build-push-action@v2.5.0
       with:
-        context: stable
-        file: Dockerfile
+        context: ./stable
+        file: ./stable/Dockerfile
         pull: true
         push: true
         tags: |
@@ -98,8 +98,8 @@ jobs:
     - name: Build and push Docker images
       uses: docker/build-push-action@v2.5.0
       with:
-        context: beta
-        file: Dockerfile
+        context: ./beta
+        file: ./beta/Dockerfile
         pull: true
         push: true
         tags: itachi1706/flutter-alpine-android:beta
@@ -117,8 +117,8 @@ jobs:
     - name: Build and push Docker images
       uses: docker/build-push-action@v2.5.0
       with:
-        context: dev
-        file: Dockerfile
+        context: ./dev
+        file: ./dev/Dockerfile
         pull: true
         push: true
         tags: itachi1706/flutter-alpine-android:dev
@@ -136,8 +136,8 @@ jobs:
     - name: Build and push Docker images
       uses: docker/build-push-action@v2.5.0
       with:
-        context: master
-        file: Dockerfile
+        context: ./master
+        file: ./master/Dockerfile
         pull: true
         push: true
         tags: itachi1706/flutter-alpine-android:master
@@ -156,8 +156,8 @@ jobs:
     - name: Build and push Docker images
       uses: docker/build-push-action@v2.5.0
       with:
-        context: fastlane
-        file: Dockerfile
+        context: ./fastlane
+        file: ./fastlane/Dockerfile
         pull: true
         push: true
         tags: itachi1706/flutter-alpine-android:stable-fastlane
