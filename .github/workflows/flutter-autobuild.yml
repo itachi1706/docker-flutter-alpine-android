@@ -1,0 +1,164 @@
+name: Update autobuild images
+
+on:
+  push:
+    branches: [ master ]
+  schedule:
+    - cron: '0 4 * * 0'
+  workflow_dispatch:
+
+jobs:
+  baseshell:
+    runs-on: ubuntu-latest
+    name: Baseshell
+    steps:
+    - uses: actions/checkout@v2
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v2.5.0
+      with:
+        context: .
+        file: Dockerfile
+        pull: true
+        push: true
+        tags: itachi1706/flutter-alpine-android:baseshell
+  fastlanecli:
+    runs-on: ubuntu-latest
+    name: Fastlane CLI
+    steps:
+    - uses: actions/checkout@v2
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v2.5.0
+      with:
+        context: ./fastlane
+        file: Dockerfile.cli
+        pull: true
+        push: true
+        tags: itachi1706/flutter-alpine-android:fastlane-cli
+  web:
+    runs-on: ubuntu-latest
+    name: Flutter Web
+    steps:
+    - uses: actions/checkout@v2
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v2.5.0
+      with:
+        context: ./web
+        file: Dockerfile
+        pull: true
+        push: true
+        tags: itachi1706/flutter-alpine-android:web
+# Depends on baseshell
+  stable:
+    runs-on: ubuntu-latest
+    name: Flutter Stable
+    needs: baseshell
+    steps:
+    - uses: actions/checkout@v2
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v2.5.0
+      with:
+        context: ./stable
+        file: Dockerfile
+        pull: true
+        push: true
+        tags: |
+          itachi1706/flutter-alpine-android:latest
+          itachi1706/flutter-alpine-android:stable
+  beta:
+    runs-on: ubuntu-latest
+    name: Flutter Beta
+    needs: baseshell
+    steps:
+    - uses: actions/checkout@v2
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v2.5.0
+      with:
+        context: ./beta
+        file: Dockerfile
+        pull: true
+        push: true
+        tags: itachi1706/flutter-alpine-android:beta
+  dev:
+    runs-on: ubuntu-latest
+    name: Flutter Dev
+    needs: baseshell
+    steps:
+    - uses: actions/checkout@v2
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v2.5.0
+      with:
+        context: ./dev
+        file: Dockerfile
+        pull: true
+        push: true
+        tags: itachi1706/flutter-alpine-android:dev
+  master:
+    runs-on: ubuntu-latest
+    name: Flutter Master
+    needs: baseshell
+    steps:
+    - uses: actions/checkout@v2
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v2.5.0
+      with:
+        context: ./master
+        file: Dockerfile
+        pull: true
+        push: true
+        tags: itachi1706/flutter-alpine-android:master
+# Depends on stable
+  fastlane:
+    runs-on: ubuntu-latest
+    name: Fastlane with Flutter Stable
+    needs: stable
+    steps:
+    - uses: actions/checkout@v2
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v2.5.0
+      with:
+        context: ./fastlane
+        file: Dockerfile
+        pull: true
+        push: true
+        tags: itachi1706/flutter-alpine-android:stable-fastlane
+  
