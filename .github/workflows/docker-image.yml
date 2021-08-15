@@ -16,6 +16,7 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build Docker images
+      continue-on-error: true
       run: |
         cd tag
         data=$(git ls-remote --tags https://github.com/flutter/flutter | grep -Po "(?<=refs/tags/)1.*" | grep -v "pre" | grep -v "dev")
@@ -37,6 +38,7 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build Docker images
+      continue-on-error: true
       run: |
         cd tag
         data=$(git ls-remote --tags https://github.com/flutter/flutter | grep -Po "(?<=refs/tags/)1.*(?<=pre)")
@@ -58,6 +60,7 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build Docker images
+      continue-on-error: true
       run: |
         cd tag
         data=$(git ls-remote --tags https://github.com/flutter/flutter | grep -Po "(?<=refs/tags/)1.*(?<=dev).*")
