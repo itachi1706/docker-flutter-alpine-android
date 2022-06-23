@@ -7,4 +7,6 @@ RUN git clone https://github.com/flutter/flutter.git -b ${FLUTTER_VERSION}
 RUN flutter precache
 RUN yes | flutter doctor --android-licenses
 
+RUN flutter doctor -v
+
 WORKDIR /opt
