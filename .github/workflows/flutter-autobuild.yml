@@ -19,7 +19,7 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build and push Docker images
-      uses: docker/build-push-action@v2.5.0
+      uses: docker/build-push-action@v3.2.0
       with:
         context: .
         file: Dockerfile
@@ -37,7 +37,7 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build and push Docker images
-      uses: docker/build-push-action@v2.5.0
+      uses: docker/build-push-action@v3.2.0
       with:
         context: ./fastlane
         file: ./fastlane/Dockerfile.cli
@@ -55,7 +55,7 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build and push Docker images
-      uses: docker/build-push-action@v2.5.0
+      uses: docker/build-push-action@v3.2.0
       with:
         context: ./web
         file: ./web/Dockerfile
@@ -75,7 +75,7 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build and push Docker images
-      uses: docker/build-push-action@v2.5.0
+      uses: docker/build-push-action@v3.2.0
       with:
         context: ./stable
         file: ./stable/Dockerfile
@@ -96,7 +96,7 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build and push Docker images
-      uses: docker/build-push-action@v2.5.0
+      uses: docker/build-push-action@v3.2.0
       with:
         context: ./beta
         file: ./beta/Dockerfile
@@ -115,7 +115,7 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build and push Docker images
-      uses: docker/build-push-action@v2.5.0
+      uses: docker/build-push-action@v3.2.0
       with:
         context: ./dev
         file: ./dev/Dockerfile
@@ -134,7 +134,7 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build and push Docker images
-      uses: docker/build-push-action@v2.5.0
+      uses: docker/build-push-action@v3.2.0
       with:
         context: ./master
         file: ./master/Dockerfile
@@ -154,7 +154,7 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build and push Docker images
-      uses: docker/build-push-action@v2.5.0
+      uses: docker/build-push-action@v3.2.0
       with:
         context: ./fastlane
         file: ./fastlane/Dockerfile
