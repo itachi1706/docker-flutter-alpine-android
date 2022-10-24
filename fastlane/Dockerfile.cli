@@ -1,4 +1,4 @@
-FROM ruby:2.7-alpine
+FROM ruby:3-alpine
 
 RUN apk add --no-cache ruby ruby-dev ruby-rdoc make g++ && gem install fastlane && fastlane --version
 
