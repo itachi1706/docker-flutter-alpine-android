@@ -1,6 +1,6 @@
 FROM alpine
 
-ENV GLIBC_VERSION=2.35-r0
+ENV GLIBC_VERSION=2.34-r0
 
 WORKDIR /usr/local/glibc
 RUN apk --no-cache add ca-certificates wget unzip && \
